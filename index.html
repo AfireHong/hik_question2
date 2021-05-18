@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #my-box{
+            width: 200px;
+            height: 200px;
+            background: rgb(209, 203, 203);
+            resize: both;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2></h2>
+        <div id="my-box" oninput="" contenteditable></div>
+    </section>
+    <script>
+        // 通过一个MutationObserver对象可以监听属性的修改，包括宽高
+        const targetNode = document.getElementById('my-box');
+        const config = { attributes: true, attributeFilter:['style'], };
+        const callback = function(mutationsList, observer) {
+            for(let mutation of mutationsList) {
+                if (mutation.type === 'attributes') {
+                    console.log(mutation.attributeName + ' 属性被修改');
+                }
+            }
+        };
+        const observer = new MutationObserver(callback);
+
+        observer.observe(targetNode, config);
+
+        // observer.disconnect();
+    </script>
+</body>
+</html>
